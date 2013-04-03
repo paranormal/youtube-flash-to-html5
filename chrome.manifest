@@ -1,0 +1,3 @@
+content detube chrome/content/
+
+overlay chrome://browser/content/browser.xul chrome://detube/content/detube.xul
