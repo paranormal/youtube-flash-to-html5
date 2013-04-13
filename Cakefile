@@ -37,4 +37,4 @@ task "xpi", "Clean, build, and package the project", ->
 
 task "spec", "Running test suites", ->
   invoke "clean"
-  exec("#{jasmine} --noStack --coffee spec")
+  exec("#{jasmine} --noStack --coffee spec/coffee")

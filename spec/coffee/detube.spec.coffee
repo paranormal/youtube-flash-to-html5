@@ -1,4 +1,4 @@
-basedir = '../chrome/content/'
+basedir = '../../chrome/content/'
 global.document =
   addEventListener: (event) ->
   location:

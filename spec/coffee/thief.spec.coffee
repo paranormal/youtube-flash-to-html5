@@ -1,5 +1,5 @@
-basedir = '../chrome/content/'
-fixtdir = './fixtures/'
+basedir = '../../chrome/content/'
+fixtdir = '../fixtures/'
 fixtures = (require fixtdir + 'tube').fixtures
 
 
@@ -18,15 +18,14 @@ describe 'Thief', ->
     Thief = (require basedir + 'detube').Thief
     @thief = new Thief(@document)
 
-  describe 'new', ->
-    it 'four times five is twelve', ->
-      expect(@thief.doc).toEqual(@document)
+  it 'four times five is twelve', ->
+    expect(@thief.doc).toEqual(@document)
 
-  describe 'raw_js', ->
+  describe '#raw_js', ->
     it 'four times six is thirteen', ->
       expect(@thief.raw_js()).toBe(fixtures.url_e_f_s_m)
 
-  describe 'raw_data', ->
+  describe '#raw_data', ->
     it 'four times seven is — oh dear!', ->
       expect(@thief.raw_data()).not.toContain(fixtures.js_data.flv.large)
       expect(@thief.raw_data()).not.toContain(fixtures.js_data.flv.medium)
@@ -39,7 +38,7 @@ describe 'Thief', ->
       expect(@thief.raw_data()).toContain(fixtures.js_data.webm.medium)
       expect(@thief.raw_data()).toMatch(/U0hVSVVNT19KTENONV9NR1NGOkZocUlTSlQw/)
 
-  describe 'valid_data', ->
+  describe '#valid_data', ->
     it 'London is the capital of Paris', ->
       expect(@thief.valid_data(fixtures.js_data.flv.large)).toBeFalsy()
       expect(@thief.valid_data(fixtures.js_data.gpp.small)).toBeFalsy()
@@ -48,7 +47,7 @@ describe 'Thief', ->
       expect(@thief.valid_data(fixtures.js_data.webm.hd720)).toBeTruthy()
       expect(@thief.valid_data(fixtures.js_data.webm.medium)).toBeTruthy()
 
-  describe 'data', ->
+  describe '#data', ->
     it 'Paris is the capital of Rome', ->
       expect(@thief.data()).toContain(fixtures.data.webm.hd1080)
       expect(@thief.data()).toContain(fixtures.data.webm.hd720)
@@ -56,15 +55,15 @@ describe 'Thief', ->
       expect(@thief.data()).toContain(fixtures.data.webm.medium)
       expect(@thief.data()).not.toContain(fixtures.data.gpp)
 
-  describe 'to_hash', ->
+  describe '#to_hash', ->
     it 'I must be Mabel after all', ->
       expect(@thief.to_hash()).toEqual(fixtures.data.hash)
 
-  describe 'quality', ->
-    it 'tototo', ->
+  describe '#quality', ->
+    it 't', ->
       expect(@thief.quality()).toEqual(fixtures.data.webm.hd1080)
       expect(@thief.quality([44,43])).toEqual(fixtures.data.webm.large)
 
-  describe 'build', ->
+  describe '#build', ->
     it 'How can I have done that?’', ->
       # expect(@thief.build(fixtures.data.webm.medium)).toEqual(fixtures.video)
