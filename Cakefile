@@ -27,7 +27,7 @@ task "clean", "Clean up build directories", ->
   console.log("cleaned...")
 
 task "compile", "Compile the project files", ->
-  exec("#{coffee} -bc -o chrome/content chrome/content/detube.coffee")
+  exec("#{coffee} -co chrome/content chrome/content/detube.coffee")
   console.log("built..")
 
 task "xpi", "Clean, build, and package the project", ->
