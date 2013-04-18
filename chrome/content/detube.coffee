@@ -1,3 +1,5 @@
+'use strict'
+
 class Thief
 
   constructor: (doc) ->
@@ -40,12 +42,10 @@ class Thief
     h = @to_hash()
     h.url + ("&#{k}=#{v}" for k,v of h when k isnt 'url' and k isnt 'quality' and k isnt 'type' and k isnt 'fallback_host').toString().replace(/,/g, '')
 
-
-
 detube =
   init: ->
-    appcontent = document.getElementById("appcontent");
-    appcontent.addEventListener("DOMContentLoaded", detube.onPageLoad, true)
+    appcontent = document.getElementById('appcontent')
+    appcontent.addEventListener('DOMContentLoaded', detube.onPageLoad, true)
 
   onPageLoad: (aEvent) ->
     doc = aEvent.originalTarget
@@ -55,12 +55,14 @@ detube =
       , on)
       if doc.location.hostname.match(/youtube/) and
       doc.getElementById('watch7-container') and doc.getElementById('player')
+        alert('hoho2')
+        alert(Thief)
+        alert('hoho3')
         thief = new Thief(doc)
         doc.getElementById('watch7-container').innerHTML = """
           <video width='640' height='480' controls='controls' autoplay src=#{thief.build()}>
           </video>
         """
-
 
   onPageUnload: (aEvent) ->
 
@@ -69,5 +71,7 @@ window.addEventListener("load", load = (event) ->
   detube.init()
 , no)
 
-exports.detube = detube
-exports.Thief = Thief
+
+if exports?
+  exports.detube = detube
+  exports.Thief = Thief

@@ -9,8 +9,10 @@ global.window =
   addEventListener: (event) ->
 
 describe 'detube', ->
+
   beforeEach ->
     @detube = (require basedir + 'detube').detube
+
   it 'description', ->
     expect(@detube.init).toBeDefined()
     expect(@detube.onPageLoad).toBeDefined()
