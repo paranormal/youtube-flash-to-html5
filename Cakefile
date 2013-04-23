@@ -1,5 +1,3 @@
-"use strict"
-
 fs = require('fs')
 _exec = require('child_process').exec
 coffee = '/home/.npm/packages/bin/coffee'
@@ -21,20 +19,20 @@ exec = (commandLine) ->
   )
 
 
-task "clean", "Clean up build directories", ->
+task 'clean', 'Clean up build directories', ->
   try
     removeFile('chrome/content/detube.js')
-  console.log("cleaned...")
+  console.log('cleaned...')
 
-task "compile", "Compile the project files", ->
-  exec("#{coffee} -co chrome/content chrome/content/detube.coffee")
-  console.log("built..")
+task 'compile', 'Compile the project files', ->
+  exec("#{coffee} -cj chrome/content/detube.js chrome/content")
+  console.log('built..')
 
-task "xpi", "Clean, build, and package the project", ->
-  invoke "clean"
-  invoke "build"
-  console.log("packaging...")
+task 'xpi', 'Clean, build, and package the project', ->
+  invoke 'clean'
+  invoke 'build'
+  console.log('packaging...')
 
-task "spec", "Running test suites", ->
-  invoke "clean"
+task 'spec', 'Running test suites', ->
+  invoke 'clean'
   exec("#{jasmine} --noStack --coffee spec/coffee")

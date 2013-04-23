@@ -1,19 +1,17 @@
 basedir = '../../chrome/content/'
-global.document =
-  addEventListener: (event) ->
-  location:
-    hostname: "youtube.com"
-  getElementById: (element) ->
-global.window =
-  document: document
-  addEventListener: (event) ->
 
 describe 'detube', ->
 
   beforeEach ->
+    document = createSpyObj('document',
+      ['addEventListener', 'location', 'getElementById'])
+    global.document = document
+    window = createSpyObj('window',
+      ['document', 'addEventListener', 'addEventListener'])
+    global.window = window
     @detube = (require basedir + 'detube').detube
 
-  it 'description', ->
+  it 'definition', ->
     expect(@detube.init).toBeDefined()
     expect(@detube.onPageLoad).toBeDefined()
     expect(@detube.onPageUnload).toBeDefined()

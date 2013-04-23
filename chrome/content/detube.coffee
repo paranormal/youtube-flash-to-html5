@@ -55,12 +55,9 @@ detube =
       , on)
       if doc.location.hostname.match(/youtube/) and
       doc.getElementById('watch7-container') and doc.getElementById('player')
-        alert('hoho2')
-        alert(Thief)
-        alert('hoho3')
         thief = new Thief(doc)
-        doc.getElementById('watch7-container').innerHTML = """
-          <video width='640' height='480' controls='controls' autoplay src=#{thief.build()}>
+        doc.getElementById('player-api').innerHTML = """
+          <video width='640' height='390' controls='controls' autoplay src=#{thief.build()}>
           </video>
         """
 
