@@ -1,5 +1,3 @@
-'use strict'
-
 class Video
 
   constructor: (@data) ->
@@ -8,7 +6,7 @@ class Video
   clean: -> unescape(@data)
 
   to_a: ->
-    for pair in @clean().split('&') when ! pair.match(@exclVarl)
+    for pair in @clean().split(/\u0026|\\u0026/) when ! pair.match(@exclVarl)
       switch (/^(\w+)=/.exec(pair))[1]
         when 'url'
           @_url(pair)
@@ -30,6 +28,6 @@ class Video
 
   to_uri: ->
     query = @to_a().join('&')
-    @url + '?' + query
+    @url + '?' + query.replace(/itag=\d+/, '')
 
 exports.Video = Video if exports?
