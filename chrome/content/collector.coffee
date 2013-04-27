@@ -17,6 +17,7 @@ class Collector
   split: ->
     @js().match(@jsReg)[1]
 
-  data: -> @split()
+  data: ->
+    @split().split(',')
 
 exports.Collector = Collector if exports?

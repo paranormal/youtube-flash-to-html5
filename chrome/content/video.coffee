@@ -5,8 +5,7 @@ class Video
   constructor: (@data) ->
     @exclVarl = /^(fallback_host|type|newshard|quality)/
 
-  clean: ->
-    unescape(@data)
+  clean: -> unescape(@data)
 
   to_a: ->
     for pair in @clean().split('&') when ! pair.match(@exclVarl)
@@ -23,11 +22,11 @@ class Video
     @url = url.replace('url=', '')
     rest
 
-  # to_h: ->
-  #   h = {}
-  #   for pair in @to_a() when ! pair.match(@exclVarl)
-  #     h[pair.split('=')[0]] = pair.split('=')[1]
-  #   h
+  to_h: ->
+    h = {}
+    for pair in @to_a() when ! pair.match(@exclVarl)
+      h[pair.split('=')[0]] = pair.split('=')[1]
+    h
 
   to_uri: ->
     query = @to_a().join('&')

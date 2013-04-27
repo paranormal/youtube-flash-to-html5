@@ -1,8 +1,7 @@
-basedir = '../../chrome/content/'
-
 describe 'detube', ->
 
   beforeEach ->
+    app = require("#{__dirname}/../helpers/specHelper")
     document = createSpyObj('document',
       ['addEventListener', 'location', 'getElementById'])
     global.document = document

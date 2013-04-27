@@ -1,12 +1,9 @@
-basedir = '../../chrome/content/'
-
 describe 'Video', ->
 
-  doc = null
   video = null
 
   beforeEach ->
-    doc = createSpy('doc')
+    app = require("#{__dirname}/../helpers/specHelper")
     video = new (require basedir + 'video').Video(doc)
 
   describe '.new', ->
@@ -37,10 +34,10 @@ describe 'Video', ->
       expect(video.to_a()).not.toContain('type=oo')
       expect(video.url).toEqual('ht')
 
-  #   it 'in a sort of circle', ->
-  #     spyOn(video, "to_a").andReturn(['quality=hd1080', 'newshard=yes'])
-  #     expect(video.to_h()).toEqual({ quality: 'hd1080' })
-  #     expect(video.to_h()).not.toEqual({ quality: 'hd1080', newshard: 'yes' })
+    it 'in a sort of circle', ->
+      spyOn(video, "to_a").andReturn(['a=x', 'c=d', 'quality=hd1080'])
+      expect(video.to_h()).toEqual({a: 'x', c: 'd'})
+      expect(video.to_h()).not.toEqual({ quality: 'hd1080' })
 
   describe '#to_uri', ->
     it 'oo', ->

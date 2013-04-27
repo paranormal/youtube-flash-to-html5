@@ -1,14 +1,9 @@
-'use strict'
-
-basedir = '../../chrome/content/'
-
 describe 'Collector', ->
 
   collector = null
-  doc = null
 
   beforeEach ->
-    doc = createSpyObj('doc', ['getElementById'])
+    app = require("#{__dirname}/../helpers/specHelper")
     collector = new (require basedir + 'collector').Collector(doc)
 
   describe '.new', ->
@@ -34,8 +29,8 @@ describe 'Collector', ->
 
 
   describe '#data', ->
-    xit 'And welcome little fishes in With gently smiling jaws', ->
+    it 'And welcome little fishes in With gently smiling jaws', ->
       expect(collector.data).toBeDefined()
-      spyOn(collector, 'split').andReturn([ 'a%2C', 'b%2C' ])
-      expect(collector.data()).toContain('a,', 'b,')
-      expect(collector.data()).not.toContain('a', 'b%2C')
+      spyOn(collector, 'split').andReturn('a%2C,6b%2C')
+      expect(collector.data()).toContain('a%2C')
+      expect(collector.data()).toContain('6b%2C')

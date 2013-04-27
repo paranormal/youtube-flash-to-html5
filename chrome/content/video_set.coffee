@@ -1,6 +1,3 @@
-Collector = require("#{__dirname}/collector").Collector
-Video = require("#{__dirname}/video").Video
-
 class VideoSet
 
   formats:
@@ -13,10 +10,22 @@ class VideoSet
 
   constructor: (@doc) ->
 
-  collector: ->
-    @_collector ||= new Collector(@doc)
+  text: ->
+    @_text ||= (new Collector(@doc)).data()
 
-  each: ->
-    new Video(raw) for raw in @collector()
+  data: ->
+    new Video(raw) for raw in @text()
+
+  type: ->
+    data for data in @data() when data.to_h().itag of @formats.webm
+
+  quality: (resolution = (itag for itag of @formats.webm)) ->
+    maxAvail = null
+    for data in @type() when data.to_h().itag in resolution
+      maxAvail = data
+    maxAvail
+
+  get: ->
+    @quality().to_uri()
 
 exports.VideoSet = VideoSet if exports?
