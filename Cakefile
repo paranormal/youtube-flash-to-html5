@@ -25,6 +25,7 @@ task 'clean', 'Clean up build directories', ->
   console.log('cleaned...')
 
 task 'compile', 'Compile the project files', ->
+  invoke 'clean'
   exec("#{coffee} -cj chrome/content/detube.js chrome/content")
   console.log('built..')
 

@@ -4,7 +4,7 @@ class Collector
 
   constructor: (@doc) ->
     @id = 'player'
-    @nodeNum = 4
+    @nodeNum = 3
     @jsReg = /"url_encoded_fmt_stream_map": "([^"]*)"/
 
   js: ->

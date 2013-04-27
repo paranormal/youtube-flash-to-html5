@@ -11,13 +11,12 @@ describe 'Collector', ->
       expect(collector).toBeDefined()
       expect(collector.doc).toEqual(doc)
       expect(collector.id).toEqual('player')
-      expect(collector.nodeNum).toEqual(4)
+      expect(collector.nodeNum).toEqual(3)
       expect(collector.jsReg).toBeDefined()
 
   describe '#js', ->
     it 'And pour the waters of the Nile On every golden scale', ->
       expect(collector.js).toBeDefined()
-      doc.getElementById.andReturn(childNodes: [0,1,2,3, { innerHTML: '' }])
       expect(collector.js()).toEqual('')
       expect(doc.getElementById).toHaveBeenCalledWith('player')
 
