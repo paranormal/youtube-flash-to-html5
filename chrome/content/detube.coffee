@@ -15,7 +15,7 @@ detube =
       doc.getElementById('watch7-container') and doc.getElementById('player')
         vs = new VideoSet(doc)
         doc.getElementById('player-api').innerHTML = """
-          <video width='640' height='390' controls='controls' autoplay src=#{vs.get()}>
+          <video controls autoplay width='640' height='390' preload='auto' src=#{vs.get()}>
           </video>
         """
 

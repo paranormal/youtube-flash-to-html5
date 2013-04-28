@@ -3,11 +3,6 @@ _exec = require('child_process').exec
 coffee = '/home/.npm/packages/bin/coffee'
 jasmine = '/home/.npm/packages/bin/jasmine-node'
 
-
-removeFile = (path) ->
-  try
-    fs.unlinkSync(path)
-
 exec = (commandLine) ->
   _exec(commandLine, (error, stdout, stderr) ->
     if stdout isnt ''
@@ -21,18 +16,21 @@ exec = (commandLine) ->
 
 task 'clean', 'Clean up build directories', ->
   try
-    removeFile('chrome/content/detube.js')
+    fs.unlinkSync('detube.js')
+  try
+    fs.unlinkSync('bootstrap.js')
   console.log('cleaned...')
 
 task 'compile', 'Compile the project files', ->
   invoke 'clean'
-  exec("#{coffee} -cj chrome/content/detube.js chrome/content")
+  exec("#{coffee} -cj ./detube.js chrome/content")
+  exec("#{coffee} -cbo ./ bootstrap.coffee")
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
-  invoke 'clean'
-  invoke 'build'
-  console.log('packaging...')
+  # invoke 'compile'
+  exec('zip detube@isgroup.com.ua.xpi icon.png detube.js install.rdf LICENSE.txt bootstrap.js')
+  console.log('packed...')
 
 task 'spec', 'Running test suites', ->
   invoke 'clean'
