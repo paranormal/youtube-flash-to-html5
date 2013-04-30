@@ -16,20 +16,20 @@ exec = (commandLine) ->
 
 task 'clean', 'Clean up build directories', ->
   try
-    fs.unlinkSync('detube.js')
+    fs.unlinkSync('lib/detube.js')
   try
     fs.unlinkSync('bootstrap.js')
   console.log('cleaned...')
 
 task 'compile', 'Compile the project files', ->
   invoke 'clean'
-  exec("#{coffee} -cj ./detube.js src")
+  exec("#{coffee} -cj ./lib/detube.js lib")
   exec("#{coffee} -cbo ./ bootstrap.coffee")
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
   # invoke 'compile'
-  exec('zip detube@isgroup.com.ua.xpi icon.png detube.js install.rdf LICENSE.txt bootstrap.js')
+  exec('zip detube@isgroup.com.ua.xpi icon.png lib/detube.js install.rdf LICENSE.txt bootstrap.js')
   console.log('packed...')
 
 task 'spec', 'Running test suites', ->
