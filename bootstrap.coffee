@@ -7,25 +7,23 @@ install = ->
 
 uninstall = ->
 
-main = (win) ->
-  Services.prompt.alert(null, "Restartless Demo", win)
-
-
 startup = (data, reason) ->
   # AddonManager.getAddonByID data.id, (addon) ->
     # detubeJS = addon.getResourceURI('detube.js').spec
   # Services.scriptloader.loadSubScript("#{__SCRIPT_URI_SPEC__}/../detube.js")
 
-  Services.ww.registerNotification((main, type) ->
-    # if type is "domwindowopened"
+  Services.ww.registerNotification((window, type) ->
+    if type is "domwindowopened"
+      window.addEventListener "load", ->
+        try
+          windowType = window.document.documentElement.getAttribute("windowtype")
+          Components.utils.reportError(windowType)
+          if windowType is 'navigator:browser'
+            Components.utils.reportError('HEHE7')
       # window.addEventListener("load", load = (event) ->
-        # window.removeEventListener("load", load, no)
-        # appcontent = window.document
-        # Components.utils.reportError()
+      #   Components.utils.reportError('HEHE6')
       # , no)
-      # Components.utils.reportError(topic)
   )
-      # runOnLoad(subject, watcher, winType)
 
   Services.prompt.alert(null, "Restartless Demo", "Hello world3.")
 
