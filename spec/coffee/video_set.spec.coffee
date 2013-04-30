@@ -10,15 +10,15 @@ describe 'VideoSet', ->
     videoSet = new (require basedir + 'video_set').VideoSet(doc)
 
   describe '#text', ->
-    it 'How doth the little crocodile Improve his shining tail', ->
+    it "London is the capital of Paris", ->
       expect(videoSet.text).toBeDefined()
 
   describe '#data', ->
-    it 'And pour the waters of the Nile On every golden scale', ->
+    it "Paris is the capital of Rome", ->
       expect(videoSet.data).toBeDefined()
 
   describe '#type', ->
-    it 'How cheerfully he seems to grin', ->
+    it 'Rome--no', ->
       expect(videoSet.type).toBeDefined()
       mockVid = [{to_h: -> itag: 5}, {to_h: -> itag: 43}, {to_h: -> itag: 46}]
       spyOn(videoSet, 'data').andReturn(mockVid)
@@ -27,7 +27,7 @@ describe 'VideoSet', ->
       expect(videoSet.data).toHaveBeenCalled()
 
   xdescribe '#quality', ->
-    it 'How neatly spread his claws', ->
+    it "SHE'S she", ->
       expect(videoSet.quality()).toBeDefined()
       mockVid = [{to_h: -> itag: '5'}, {to_h: -> itag: '43'}, {to_h: -> itag: '46'}]
       spyOn(videoSet, 'type').andReturn(mockVid)
@@ -37,7 +37,7 @@ describe 'VideoSet', ->
       expect(videoSet.type).toHaveBeenCalled()
 
   describe '#get', ->
-    it 'And welcome little fishes in With gently smiling jaws', ->
+    it "I'm I", ->
       type = createSpyObj('type', ['to_uri'])
       type.to_uri.andReturn('string')
       spyOn(videoSet, 'quality').andReturn(type)
