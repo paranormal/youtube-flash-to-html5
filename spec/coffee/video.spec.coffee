@@ -43,4 +43,4 @@ describe 'Video', ->
     it 'oo', ->
       spyOn(video, "to_a").andReturn(['quality=hd720', 'itag=45'])
       video.url = 'h'
-      expect(video.to_uri()).toEqual('h?quality=hd720&itag=45')
+      expect(video.to_uri()).toEqual('h?quality=hd720&')
