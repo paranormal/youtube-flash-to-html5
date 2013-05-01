@@ -28,4 +28,11 @@ class VideoSet
   get: ->
     @quality().to_uri()
 
+  replace: ->
+    @doc.getElementById('player-api').innerHTML = """
+      <video controls autoplay width='640' height='390' preload='auto' src='#{@get()}'}>
+      </video>
+    """
+
+
 exports.VideoSet = VideoSet if exports?

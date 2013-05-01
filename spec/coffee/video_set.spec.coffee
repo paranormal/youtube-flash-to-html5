@@ -42,3 +42,9 @@ describe 'VideoSet', ->
       type.to_uri.andReturn('string')
       spyOn(videoSet, 'quality').andReturn(type)
       expect(videoSet.get()).toMatch(/string/)
+
+  describe '#replace', ->
+    it 'replace', ->
+      spyOn(videoSet, 'get').andReturn('http://t/v?a=b')
+      expect(videoSet.replace()).toMatch(/v\?a=b/)
+      expect(videoSet.replace()).toMatch(/src='/)

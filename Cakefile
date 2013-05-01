@@ -23,7 +23,7 @@ task 'clean', 'Clean up build directories', ->
 
 task 'compile', 'Compile the project files', ->
   invoke 'clean'
-  exec("#{coffee} -cj ./lib/detube.js lib")
+  exec("#{coffee} -cbj ./lib/detube.js lib")
   exec("#{coffee} -cbo ./ bootstrap.coffee")
   console.log('built..')
 
