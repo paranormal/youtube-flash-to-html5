@@ -12,8 +12,7 @@
     <em:creator>paranormal</em:creator>
     <em:developer>paranormal</em:developer>
     <em:description>Youtube video player replacer</em:description>
-    <!-- <em:homepageURL>http://my url will be ;)</em:homepageURL> -->
-    <!-- <em:iconURL>chrome://detube/content/detube.png</em:iconURL> -->
+    <em:homepageURL>https://github.com/paranormal/detube</em:homepageURL>
 
     <!-- Supported Browser Versions -->
     <!-- Firefox -->

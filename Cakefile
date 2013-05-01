@@ -23,13 +23,12 @@ task 'clean', 'Clean up build directories', ->
 
 task 'compile', 'Compile the project files', ->
   invoke 'clean'
-  exec("#{coffee} -cbj ./lib/detube.js lib")
-  exec("#{coffee} -cbo ./ bootstrap.coffee")
+  exec("#{coffee} -cbj bootstrap.js lib")
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
   # invoke 'compile'
-  exec('zip detube@isgroup.com.ua.xpi icon.png lib/detube.js install.rdf LICENSE.txt bootstrap.js')
+  exec('zip detube@isgroup.com.ua.xpi icon.png icon64.png install.rdf LICENSE.txt bootstrap.js')
   console.log('packed...')
 
 task 'spec', 'Running test suites', ->

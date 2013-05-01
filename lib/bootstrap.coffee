@@ -36,10 +36,8 @@ windows =
   onContentLoaded: (aEvent) ->
     doc = aEvent.originalTarget
     if doc.nodeName is "#document" and doc.location.hostname.match(/youtube/) and doc.getElementById('watch7-container') and doc.getElementById('player')
-      Services.prompt.alert(null, "Restartless Demo", 'HOHO')
       vs = new VideoSet(doc)
       vs.replace()
-      Services.prompt.alert(null, "Restartless Demo", 'HOHOHO')
 
 
 
@@ -49,12 +47,11 @@ uninstall = ->
 
 startup = (data, reason) ->
   windows.setup()
-  AddonManager.getAddonByID data.id, (addon) ->
-    detubeJS = addon.getResourceURI('lib/detube.js').spec
-    Services.scriptloader.loadSubScript(detubeJS)
-
-  Services.prompt.alert(null, "Restartless Demo", "Hello world3.")
+  # AddonManager.getAddonByID data.id, (addon) ->
+    # detubeJS = addon.getResourceURI('lib/detube.js').spec
+    # Services.scriptloader.loadSubScript(detubeJS)
+  # Services.prompt.alert(null, "Restartless Demo", "Hello world3.")
 
 shutdown = (data, reason) ->
   windows.dispose() if reason is APP_SHUTDOWN
-  Services.prompt.alert(null, "Restartless Demo", "Goodbye world.")
+  # Services.prompt.alert(null, "Restartless Demo", "Goodbye world.")
