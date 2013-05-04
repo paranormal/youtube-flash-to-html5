@@ -16,7 +16,6 @@ windows =
     enumerator = Services.wm.getEnumerator('navigator:browser')
     while (enumerator.hasMoreElements())
       @unapplyToWindow(enumerator.getNext().QueryInterface(Components.interfaces.nsIDOMWindow))
-    Services.prompt.alert(null, "Restartless Demo", "Done")
 
   applyToWindow: (window) ->
     window.gBrowser.addEventListener('DOMContentLoaded', @onContentLoaded, true)
@@ -53,5 +52,6 @@ startup = (data, reason) ->
   # Services.prompt.alert(null, "Restartless Demo", "Hello world3.")
 
 shutdown = (data, reason) ->
-  windows.dispose() if reason is APP_SHUTDOWN
-  # Services.prompt.alert(null, "Restartless Demo", "Goodbye world.")
+  windows.dispose()
+  # if reason is APP_SHUTDOWN
+  Services.prompt.alert(null, "Restartless Demo", reason)
