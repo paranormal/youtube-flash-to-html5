@@ -11,7 +11,7 @@ describe 'Collector', ->
       expect(collector).toBeDefined()
       expect(collector.doc).toEqual(doc)
       expect(collector.id).toEqual('player')
-      expect(collector.nodeNum).toEqual(3)
+      expect(collector.nodeNum).toEqual(5)
       expect(collector.jsReg).toBeDefined()
 
   describe '#js', ->

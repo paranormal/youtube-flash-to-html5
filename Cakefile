@@ -17,7 +17,7 @@ exec = (commandLine) ->
 task 'clean', 'Clean up build directories', ->
   try(fs.unlinkSync('detube@isgroup.com.ua.xpi'))
   try(fs.unlinkSync('bootstrap.js'))
-  for js in ['collector.js', 'video.js', 'video_set.js']
+  for js in ['windows.js', 'collector.js', 'video.js', 'video_set.js']
     try(fs.unlinkSync("modules/#{js}"))
   console.log('cleaned...')
 
