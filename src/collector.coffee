@@ -1,5 +1,3 @@
-'use strict'
-
 class Collector
 
   constructor: (@doc) ->
@@ -20,4 +18,7 @@ class Collector
   data: ->
     @split().split(',')
 
-exports.Collector = Collector if exports?
+if exports?
+  exports.Collector = Collector
+else
+  EXPORTED_SYMBOLS = ['Collector']

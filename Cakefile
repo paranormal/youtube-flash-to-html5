@@ -15,20 +15,26 @@ exec = (commandLine) ->
 
 
 task 'clean', 'Clean up build directories', ->
-  try
-    fs.unlinkSync('lib/detube.js')
-  try
-    fs.unlinkSync('bootstrap.js')
+  try(fs.unlinkSync('detube@isgroup.com.ua.xpi'))
+  try(fs.unlinkSync('bootstrap.js'))
+  for js in ['collector.js', 'video.js', 'video_set.js']
+    try(fs.unlinkSync("modules/#{js}"))
   console.log('cleaned...')
 
 task 'compile', 'Compile the project files', ->
   invoke 'clean'
-  exec("#{coffee} -cbj bootstrap.js lib")
+  exec("#{coffee} -cb bootstrap.coffee")
+  exec("#{coffee} -cbo modules src")
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
   # invoke 'compile'
-  exec('zip detube@isgroup.com.ua.xpi icon.png icon64.png install.rdf LICENSE.txt bootstrap.js')
+  exec('zip detube@isgroup.com.ua.xpi
+    LICENSE.txt
+    icon.png icon64.png
+    install.rdf bootstrap.js
+    modules/*.js
+  ')
   console.log('packed...')
 
 task 'spec', 'Running test suites', ->

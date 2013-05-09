@@ -34,5 +34,9 @@ class VideoSet
       </video>
     """
 
-
-exports.VideoSet = VideoSet if exports?
+if exports?
+  exports.VideoSet = VideoSet
+else
+  Components.utils.import("resource://detube/modules/video.js")
+  Components.utils.import("resource://detube/modules/collector.js")
+  EXPORTED_SYMBOLS = ['VideoSet']
