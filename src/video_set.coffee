@@ -1,3 +1,6 @@
+Collector = require('collector').Collector
+Video = require('video').Video
+
 class VideoSet
 
   formats:
@@ -34,9 +37,4 @@ class VideoSet
       </video>
     """
 
-if exports?
-  exports.VideoSet = VideoSet
-else
-  Components.utils.import("resource://detube/modules/video.js")
-  Components.utils.import("resource://detube/modules/collector.js")
-  EXPORTED_SYMBOLS = ['VideoSet']
+exports.VideoSet = VideoSet

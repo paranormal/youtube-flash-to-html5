@@ -1,15 +1,18 @@
-EXPORTED_SYMBOLS = ['windows']
-Components.utils.import("resource://detube/modules/video_set.js")
+VideoSet = require('video_set').VideoSet
 
-windows =
+class W
 
-  setup: (Sw, Swm, Ci) ->
+  constructor: (args) ->
+
+class Windows extends W
+
+  setup: () ->
     Sw.registerNotification(@onWindowOpen)
     enumerator = Swm.getEnumerator('navigator:browser')
     while enumerator.hasMoreElements()
       @applyToWindow(enumerator.getNext().QueryInterface(Ci.nsIDOMWindow))
 
-  dispose: (Sw, Swm, Ci) ->
+  dispose: () ->
     Sw.unregisterNotification(@onWindowOpen)
     enumerator = Swm.getEnumerator('navigator:browser')
     while (enumerator.hasMoreElements())
@@ -23,15 +26,17 @@ windows =
 
   onWindowOpen: (window, topic) ->
     if topic == 'domwindowopened'
-      window.addEventListener('load', windows.onWindowLoad, false)
+      window.addEventListener('load', @onWindowLoad, false)
 
   onWindowLoad: ({currentTarget: window}) ->
-    window.removeEventListener('load', windows.onWindowLoad, false)
+    window.removeEventListener('load', @onWindowLoad, false)
     if window.document.documentElement.getAttribute('windowtype') is 'navigator:browser'
-      windows.applyToWindow(window)
+      @applyToWindow(window)
 
   onContentLoaded: (aEvent) ->
     doc = aEvent.originalTarget
     if doc.nodeName is "#document" and doc.location.hostname.match(/youtube/) and doc.getElementById('watch7-container') and doc.getElementById('player')
       vs = new VideoSet(doc)
       vs.replace()
+
+exports.Windows = Windows

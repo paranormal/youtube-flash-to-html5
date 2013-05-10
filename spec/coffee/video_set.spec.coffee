@@ -4,9 +4,6 @@ describe 'VideoSet', ->
 
   beforeEach ->
     app = require("#{__dirname}/../helpers/specHelper")
-    # global.Collector = createSpyObj('Collector', ['data'])
-    global.Collector = require("#{basedir}/collector").Collector
-    global.Video = require("#{basedir}/video").Video
     videoSet = new (require basedir + 'video_set').VideoSet(doc)
 
   describe '#text', ->

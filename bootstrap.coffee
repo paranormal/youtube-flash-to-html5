@@ -1,35 +1,34 @@
 {interfaces: Ci, utils: Cu} = Components
+
 Cu.import('resource://gre/modules/Services.jsm')
+
 {io: Si, ww: Sw, wm: Swm} = Services
-
-PREFS =
-  appname: 'detube'
-  resource: "resource://detube/modules/"
-  modules: ['windows.js', 'video_set.js', 'collector.js', 'video.js']
-  branch: 'extensions.detube'
-
 
 install = ->
 
 uninstall = ->
 
 startup = (data, reason) ->
-  resources.setup(data)
-  windows.setup(Sw, Swm, Ci)
+  # Services.prompt.alert(null, "Restartless Demo", resources)
+  Windows = new (require('windows').Windows)
+  Windows.setup()
 
 shutdown = (data, reason) ->
-  resources.dispose()
-  windows.dispose(Sw, Swm, Ci)
+  Windows = new (require('windows').Windows)
+  Windows.dispose()
 
-resources =
-  setup: (data) ->
-    Si.getProtocolHandler('resource')
-      .QueryInterface(Ci.nsIResProtocolHandler)
-      .setSubstitution(PREFS.appname, data.resourceURI)
-    Cu.import(PREFS.resource + PREFS.modules[0])
-
-  dispose: ->
-    for module in PREFS.modules
-      Cu.import(PREFS.resource + module)
-    Si.getProtocolHandler('resource')
-      .QueryInterface(Ci.nsIResProtocolHandler)
+`
+(function(global) {
+  var modules = {};
+  global.require = function require(src) {
+    if (modules[src]) return modules[src];
+    var scope = {require: global.require, exports: {}};
+    var tools = {};
+    Components.utils.import("resource://gre/modules/Services.jsm", tools);
+    var baseURI = tools.Services.io.newURI(__SCRIPT_URI_SPEC__, null, null);
+    var uri = tools.Services.io.newURI("modules/" + src + ".js", null, baseURI);
+      tools.Services.scriptloader.loadSubScript(uri.spec, scope);
+    return modules[src] = scope.exports;
+  }
+})(this);
+`

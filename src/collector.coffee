@@ -18,7 +18,4 @@ class Collector
   data: ->
     @split().split(',')
 
-if exports?
-  exports.Collector = Collector
-else
-  EXPORTED_SYMBOLS = ['Collector']
+exports.Collector = Collector

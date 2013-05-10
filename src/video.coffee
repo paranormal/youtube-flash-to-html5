@@ -30,7 +30,4 @@ class Video
     query = @to_a().join('&')
     @url + '?' + query.replace(/itag=\d+/, '')
 
-if exports?
-  exports.Video = Video
-else
-  EXPORTED_SYMBOLS = ['Video']
+exports.Video = Video
