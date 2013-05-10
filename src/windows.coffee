@@ -1,18 +1,14 @@
 VideoSet = require('video_set').VideoSet
 
-class W
+windows =
 
-  constructor: (args) ->
-
-class Windows extends W
-
-  setup: () ->
+  setup: ->
     Sw.registerNotification(@onWindowOpen)
     enumerator = Swm.getEnumerator('navigator:browser')
     while enumerator.hasMoreElements()
       @applyToWindow(enumerator.getNext().QueryInterface(Ci.nsIDOMWindow))
 
-  dispose: () ->
+  dispose: ->
     Sw.unregisterNotification(@onWindowOpen)
     enumerator = Swm.getEnumerator('navigator:browser')
     while (enumerator.hasMoreElements())
@@ -26,17 +22,18 @@ class Windows extends W
 
   onWindowOpen: (window, topic) ->
     if topic == 'domwindowopened'
-      window.addEventListener('load', @onWindowLoad, false)
+      window.addEventListener('load', windows.onWindowLoad, false)
 
   onWindowLoad: ({currentTarget: window}) ->
-    window.removeEventListener('load', @onWindowLoad, false)
+    window.removeEventListener('load', windows.onWindowLoad, false)
     if window.document.documentElement.getAttribute('windowtype') is 'navigator:browser'
-      @applyToWindow(window)
+      windows.applyToWindow(window)
 
   onContentLoaded: (aEvent) ->
     doc = aEvent.originalTarget
-    if doc.nodeName is "#document" and doc.location.hostname.match(/youtube/) and doc.getElementById('watch7-container') and doc.getElementById('player')
+    if doc.nodeName is "#document" and doc.location.hostname.match(/youtube/) and doc.getElementById('player')
       vs = new VideoSet(doc)
       vs.replace()
 
-exports.Windows = Windows
+
+exports.windows = windows

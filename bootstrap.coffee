@@ -4,18 +4,7 @@ Cu.import('resource://gre/modules/Services.jsm')
 
 {io: Si, ww: Sw, wm: Swm} = Services
 
-install = ->
-
-uninstall = ->
-
-startup = (data, reason) ->
-  # Services.prompt.alert(null, "Restartless Demo", resources)
-  Windows = new (require('windows').Windows)
-  Windows.setup()
-
-shutdown = (data, reason) ->
-  Windows = new (require('windows').Windows)
-  Windows.dispose()
+VideoSet = null
 
 `
 (function(global) {
@@ -32,3 +21,20 @@ shutdown = (data, reason) ->
   }
 })(this);
 `
+
+
+install = ->
+
+uninstall = ->
+startup = (data, reason) ->
+  # Services.prompt.alert(null, "Restartless Demo", resources)
+  # Components.utils.reportError('hohoho')
+  windows = require('windows').windows
+  # VideoSet = require('video_set').VideoSet
+  # windows = Windows
+  windows.setup()
+
+shutdown = (data, reason) ->
+  windows = require('windows').windows
+  # windows = new Windows
+  windows.dispose()
