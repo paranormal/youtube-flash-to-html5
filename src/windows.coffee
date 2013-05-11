@@ -29,26 +29,24 @@ windows =
 
   onContentLoaded: (aEvent) ->
     doc = aEvent.originalTarget
-    if doc.nodeName is '#document' and doc.location.hostname.match(/youtube/) and doc.getElementById('player')
+    if doc.nodeName is '#document' and
+    doc.location.hostname.match(/youtube/) and
+    doc.getElementById('player')
       document = doc.defaultView.wrappedJSObject.document
-      ythdinterval = document.defaultView.setInterval ->
+      interval = document.defaultView.setInterval ->
         player = document.defaultView.document.getElementById("movie_player")
-        if player and player.hasFallbackHappened?
-          if player.hasFallbackHappened()
+        if player
+          player.__exposedProps__ =
+            'getPlayerState': 'r',
+            'hasFallbackHappened': 'r',
+            'getVideoData': 'r'
+        if player and
+        player.getPlayerState? and
+        player.getPlayerState() isnt 3
+          if player.getPlayerState() is -1 and  player.hasFallbackHappened()
             player.loadVideoById(player.getVideoData().video_id)
-          document.defaultView.clearInterval(ythdinterval)
+            document.defaultView.clearInterval(interval)
 
-      , 1000
-
-      # player = document.getElementById('movie_player')
-      # Services.prompt.alert(null, 'Restartless Demo', document.defaultView)
-      # document.getElementById('watch7-container').classList.add('watch-wide')
-      # player = doc.getElementById('movie_player').wrappedJSObject
-      # Services.prompt.alert(null, 'Restartless Demo', player.))
-      # if player
-        # player.loadVideoById(player.getVideoData().video_id)
-      # vs = new VideoSet(doc)
-      # vs.replace()
-
+      , 100
 
 exports.windows = windows
