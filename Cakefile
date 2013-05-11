@@ -25,7 +25,7 @@ task 'compile', 'Compile the project files', ->
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
-  # invoke 'compile'
+  invoke 'compile'
   exec('zip detube@isgroup.com.ua.xpi
     LICENSE.txt
     icon.png icon64.png
