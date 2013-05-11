@@ -17,14 +17,11 @@ exec = (commandLine) ->
 task 'clean', 'Clean up build directories', ->
   try(fs.unlinkSync('detube@isgroup.com.ua.xpi'))
   try(fs.unlinkSync('bootstrap.js'))
-  for js in ['windows.js', 'collector.js', 'video.js', 'video_set.js']
-    try(fs.unlinkSync("modules/#{js}"))
   console.log('cleaned...')
 
 task 'compile', 'Compile the project files', ->
   invoke 'clean'
-  exec("#{coffee} -cb bootstrap.coffee")
-  exec("#{coffee} -cbo modules src")
+  exec("#{coffee} -cbj bootstrap.js src")
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
@@ -33,7 +30,6 @@ task 'xpi', 'Clean, build, and package the project', ->
     LICENSE.txt
     icon.png icon64.png
     install.rdf bootstrap.js
-    modules/*.js
   ')
   console.log('packed...')
 
