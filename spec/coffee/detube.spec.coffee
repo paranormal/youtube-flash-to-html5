@@ -9,15 +9,15 @@ describe 'Detube', ->
     Detube = (require "#{__dirname}/../../src/detube").Detube
     detube = new Detube(doc)
 
-  describe '.', ->
-    it 'How doth the little crocodile Improve his shining tail,', ->
+  it '.', ->
     expect(Detube.exposedProps.getPlayerState).toEqual('r')
     expect(Detube.exposedProps.hasFallbackHappened).toEqual('r')
     expect(Detube.exposedProps.getVideoData).toEqual('r')
 
-  it '.new', ->
-    expect(detube.doc).toEqual(doc)
-    expect(detube.document).toEqual(doc.defaultView.wrappedJSObject.document)
+  describe '.new', ->
+    it 'How doth the little crocodile Improve his shining tail,', ->
+      expect(detube.doc).toEqual(doc)
+      expect(detube.document).toEqual(doc.defaultView.wrappedJSObject.document)
 
   describe '.valid', ->
     it 'And pour the waters of the Nile On every golden scale!', ->
