@@ -6,4 +6,6 @@ doc.getElementById.andReturn(true)
 doc.location = {hostname: 'youtube.com'}
 doc.defaultView =
   wrappedJSObject:
-    document: '<some>something-something, death and taxes</nya-nya>'
+    document:
+      getElementById: (id) ->
+        getPlayerState: -> 3

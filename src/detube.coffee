@@ -4,32 +4,33 @@ class Detube
 
   constructor: (doc) ->
     @doc = doc
-    @document = doc.defaultView.wrappedJSObject.document
+    @document = @doc.defaultView.wrappedJSObject.document
 
   valid: ->
-    @valid_domain() and @valid_play()
+    @doc.location.hostname.match(/youtube/) and @doc.getElementById('player')
 
-  valid_domain: ->
-    @doc.location.hostname.match(/youtube/) and
-    @doc.getElementById('player')
-
-  valid_play: ->
+  proceed: ->
     interval = @document.defaultView.setInterval =>
-      player = @document.defaultView.document.getElementById("movie_player")
-      player.__exposedProps__ = Detube.exposedProps if player
-      if player and
-      player.getPlayerState? and
-      player.getPlayerState() isnt 3
-        if player.getPlayerState() is 1
-          Components.utils.reportError('Valid video')
-          @document.defaultView.clearInterval(interval)
-        else if player.getPlayerState() is -1 and  player.hasFallbackHappened()
-          Components.utils.reportError('Was changed to embedded')
-          player.loadVideoById(player.getVideoData().video_id)
-          @document.defaultView.clearInterval(interval)
-
+      player = @player()
+      if player?
+        switch player.getPlayerState()
+          when 1
+            @document.defaultView.clearInterval(interval)
+            Components.utils.reportError('+++Valid ac3  +++')
+          when -1, player.hasFallbackHappened()
+            player.loadVideoById(player.getVideoData().video_id)
+            @document.defaultView.clearInterval(interval)
+            Components.utils.reportError('---Invalid ac2---')
     , 100
 
+  player: ->
+    mp = @document.getElementById('movie_player')
+    mp.__exposedProps__ = Detube.exposedProps if mp
+    if mp and mp.getPlayerState? and mp.getPlayerState() isnt 3
+      mp
+    else
+      null
 
+  load: -> @proceed() if @valid()?
 
 exports.Detube = Detube

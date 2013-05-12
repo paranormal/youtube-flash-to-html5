@@ -25,9 +25,7 @@ task 'compile', 'Compile the project files', ->
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
-  exec('zip detube@isgroup.com.ua.xpi
-    LICENSE.txt
-    install.rdf bootstrap.js
+  exec('zip detube@isgroup.com.ua.xpi install.rdf bootstrap.js
   ')
   console.log('packed...')
 

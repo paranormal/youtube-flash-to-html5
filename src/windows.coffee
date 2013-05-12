@@ -30,6 +30,6 @@ windows =
   onContentLoaded: (aEvent) ->
     if aEvent.originalTarget.nodeName is '#document'
       detube = new Detube(aEvent.originalTarget)
-      detube.valid()
+      detube.load()
 
 exports.windows = windows

@@ -4,14 +4,8 @@ Cu.import('resource://gre/modules/Services.jsm')
 
 exports = {}
 
-
 install = ->
-
 uninstall = ->
-startup = (data, reason) ->
-  # Services.prompt.alert(null, "Restartless Demo", resources)
-  # Components.utils.reportError('hohoho')
-  windows.setup()
 
-shutdown = (data, reason) ->
-  windows.dispose()
+startup = -> windows.setup()
+shutdown = -> windows.dispose()
