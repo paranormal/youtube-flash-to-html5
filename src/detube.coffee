@@ -21,10 +21,10 @@ class Detube
       player.getPlayerState? and
       player.getPlayerState() isnt 3
         if player.getPlayerState() is 1
-          # Components.utils.reportError('Valid video')
+          Components.utils.reportError('Valid video')
           @document.defaultView.clearInterval(interval)
         else if player.getPlayerState() is -1 and  player.hasFallbackHappened()
-          # Components.utils.reportError('Was changed to embedded')
+          Components.utils.reportError('Was changed to embedded')
           player.loadVideoById(player.getVideoData().video_id)
           @document.defaultView.clearInterval(interval)
 

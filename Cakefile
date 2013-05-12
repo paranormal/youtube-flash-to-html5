@@ -27,7 +27,6 @@ task 'compile', 'Compile the project files', ->
 task 'xpi', 'Clean, build, and package the project', ->
   exec('zip detube@isgroup.com.ua.xpi
     LICENSE.txt
-    icon.png icon64.png
     install.rdf bootstrap.js
   ')
   console.log('packed...')
