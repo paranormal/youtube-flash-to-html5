@@ -13,10 +13,12 @@ windows =
       @unapplyToWindow(enumerator.getNext().QueryInterface(Ci.nsIDOMWindow))
 
   applyToWindow: (window) ->
-    window.gBrowser.addEventListener('DOMContentLoaded', @onContentLoaded, true)
+    window.gBrowser
+      .addEventListener('DOMContentLoaded', @onContentLoaded, true)
 
   unapplyToWindow: (window) ->
-    window.gBrowser.removeEventListener('DOMContentLoaded', @onContentLoaded, true)
+    window.gBrowser
+      .removeEventListener('DOMContentLoaded', @onContentLoaded, true)
 
   onWindowOpen: (window, topic) ->
     if topic == 'domwindowopened'
@@ -24,8 +26,8 @@ windows =
 
   onWindowLoad: ({currentTarget: window}) ->
     window.removeEventListener('load', windows.onWindowLoad, false)
-    if window.document.documentElement.getAttribute('windowtype') is 'navigator:browser'
-      windows.applyToWindow(window)
+    windowtype = window.document.documentElement.getAttribute('windowtype')
+    windows.applyToWindow(window) if windowtype is 'navigator:browser'
 
   onContentLoaded: (aEvent) ->
     if aEvent.originalTarget.nodeName is '#document'

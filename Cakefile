@@ -20,11 +20,13 @@ task 'clean', 'Clean up build directories', ->
   console.log('cleaned...')
 
 task 'compile', 'Compile the project files', ->
+  invoke 'spec'
   invoke 'clean'
   exec("#{coffee} -cbj bootstrap.js src")
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
+  invoke 'spec'
   exec('zip detube@isgroup.com.ua.xpi install.rdf bootstrap.js
   ')
   console.log('packed...')
