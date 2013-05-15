@@ -37,18 +37,17 @@ windows =
         windows.onPlayerLoad(window)
 
   onPlayerLoad: (window) ->
-    timer = Components.classes["@mozilla.org/timer;1"]
+    timer = Components.classes['@mozilla.org/timer;1']
       .createInstance(Components.interfaces.nsITimer)
     type = Components.interfaces.nsITimer.TYPE_REPEATING_SLACK
     event = windows.onPlayerObserver(window)
-    timer.init(event, 1000, type)
+    timer.initWithCallback(event, 1000, type)
     window.addEventListener('unload', timer.cancel, false)
 
 
   onPlayerObserver: (window) ->
     event =
-      observe: (timer) =>
-        Components.utils.reportError(typeof window)
+      notify: (timer) =>
         player = new Player(window.document.getElementById('movie_player'))
         if player.valid()? and player.error()?
           player.load()
