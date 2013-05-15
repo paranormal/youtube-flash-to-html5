@@ -34,6 +34,7 @@ class Player
 
 
   load: ->
-    @movie_player.loadVideoById(@movie_player.getVideoData().video_id)
+    if @movie_player.hasFallbackHappened()
+      @movie_player.loadVideoById(@movie_player.getVideoData().video_id)
 
 exports.Player = Player

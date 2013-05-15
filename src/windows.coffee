@@ -32,18 +32,23 @@ windows =
     if event.originalTarget.nodeName is '#document'
       window = event.originalTarget.defaultView.window
       if window.location.hostname.match(/youtube/) and
-      window.document.getElementById('player')
+      window.document.getElementById('player') and
+      !window.document.getElementById('watch7-player-unavailable')
         windows.onPlayerLoad(window)
 
   onPlayerLoad: (window) ->
     timer = Components.classes["@mozilla.org/timer;1"]
       .createInstance(Components.interfaces.nsITimer)
-    type = Components.interfaces.nsITimer.TYPE_REPEATING_PRECISE_CAN_SKIP
-    timer.init(windows.onPlayerObserver(window), 1000, type)
+    type = Components.interfaces.nsITimer.TYPE_REPEATING_SLACK
+    event = windows.onPlayerObserver(window)
+    timer.init(event, 1000, type)
+    window.addEventListener('unload', timer.cancel, false)
+
 
   onPlayerObserver: (window) ->
     event =
       observe: (timer) =>
+        Components.utils.reportError(typeof window)
         player = new Player(window.document.getElementById('movie_player'))
         if player.valid()? and player.error()?
           player.load()
