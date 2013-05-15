@@ -13,12 +13,10 @@ windows =
       @unapplyToWindow(enumerator.getNext().QueryInterface(Ci.nsIDOMWindow))
 
   applyToWindow: (window) ->
-    window.gBrowser
-      .addEventListener('DOMContentLoaded', @onContentLoaded, true)
+    window.gBrowser.addEventListener('load', @onContentLoaded, true)
 
   unapplyToWindow: (window) ->
-    window.gBrowser
-      .removeEventListener('DOMContentLoaded', @onContentLoaded, true)
+    window.gBrowser.removeEventListener('load', @onContentLoaded, true)
 
   onWindowOpen: (window, topic) ->
     if topic == 'domwindowopened'
@@ -27,11 +25,28 @@ windows =
   onWindowLoad: ({currentTarget: window}) ->
     window.removeEventListener('load', windows.onWindowLoad, false)
     windowtype = window.document.documentElement.getAttribute('windowtype')
-    windows.applyToWindow(window) if windowtype is 'navigator:browser'
+    if windowtype is 'navigator:browser'
+      windows.applyToWindow(window)
 
-  onContentLoaded: (aEvent) ->
-    if aEvent.originalTarget.nodeName is '#document'
-      detube = new Detube(aEvent.originalTarget)
-      detube.load()
+  onContentLoaded: (event) ->
+    if event.originalTarget.nodeName is '#document'
+      window = event.originalTarget.defaultView.window
+      if window.location.hostname.match(/youtube/) and
+      window.document.getElementById('player')
+        windows.onPlayerLoaded(window)
+
+  onPlayerLoaded: (window) ->
+    timer = Components.classes["@mozilla.org/timer;1"]
+      .createInstance(Components.interfaces.nsITimer)
+    type = Components.interfaces.nsITimer.TYPE_REPEATING_PRECISE_CAN_SKIP
+    timer.init(windows.onPlayerObserver(window), 1000, type)
+
+  onPlayerObserver: (window) ->
+    event =
+      observe: (subject) =>
+        player = new Player(window.document.getElementById('movie_player'))
+        if player.valid()? and player.error()?
+          player.load()
+          subject.cancel()
 
 exports.windows = windows

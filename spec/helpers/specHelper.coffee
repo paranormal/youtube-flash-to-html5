@@ -1,11 +1,10 @@
 global.basedir = "#{__dirname}/../../src/"
 
-global.doc = createSpyObj('doc', ['getElementById', 'location', 'defaultView'])
+movie_player = createSpyObj('movie_player', ['wrappedJSObject'])
+movie_player.wrappedJSObject =
+  getPlayerState: -> -1
+  hasFallbackHappened: -> true
+  loadVideoById: -> true
+  getVideoData: -> true
 
-doc.getElementById.andReturn(true)
-doc.location = {hostname: 'youtube.com'}
-doc.defaultView =
-  wrappedJSObject:
-    document:
-      getElementById: (id) ->
-        getPlayerState: -> 3
+exports.movie_player = movie_player
