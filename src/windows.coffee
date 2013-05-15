@@ -33,9 +33,9 @@ windows =
       window = event.originalTarget.defaultView.window
       if window.location.hostname.match(/youtube/) and
       window.document.getElementById('player')
-        windows.onPlayerLoaded(window)
+        windows.onPlayerLoad(window)
 
-  onPlayerLoaded: (window) ->
+  onPlayerLoad: (window) ->
     timer = Components.classes["@mozilla.org/timer;1"]
       .createInstance(Components.interfaces.nsITimer)
     type = Components.interfaces.nsITimer.TYPE_REPEATING_PRECISE_CAN_SKIP
