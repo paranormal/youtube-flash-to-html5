@@ -43,10 +43,10 @@ windows =
 
   onPlayerObserver: (window) ->
     event =
-      observe: (subject) =>
+      observe: (timer) =>
         player = new Player(window.document.getElementById('movie_player'))
         if player.valid()? and player.error()?
           player.load()
-          subject.cancel()
+          timer.cancel()
 
 exports.windows = windows
