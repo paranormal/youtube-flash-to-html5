@@ -12,16 +12,11 @@ class Player
 
   error: ->
     switch @movie_player.getPlayerState()
-      when -1, @movie_player.hasFallbackHappened()
-        # Components.utils.reportError('unstarted|fall has been happened')
+      when -1, @movie_player.hasFallbackHappened(), 0, 1, 2
+        # Components.utils.reportError('unstarted|fall back|0|1|2')
         true
-      when 0, 1, 2
-        # Components.utils.reportError('ended 0|playing 1|paused 2')
-        true
-      when 3
-        # Components.utils.reportError('buffering')
-        null
-      else
+      else #3 and alternative states
+        # Components.utils.reportError('buffering -> 3')
         null
 
   valid: ->

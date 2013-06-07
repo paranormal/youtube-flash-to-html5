@@ -16,4 +16,3 @@ describe 'windows', ->
       expect(windows.onWindowLoad).toBeDefined()
       expect(windows.onContentLoaded).toBeDefined()
       expect(windows.onPlayerLoad).toBeDefined()
-      expect(windows.onPlayerObserver).toBeDefined()

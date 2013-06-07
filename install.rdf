@@ -1,22 +1,18 @@
 <?xml version="1.0"?>
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
-  <Description about="urn:mozilla:install-manifest">
-    <em:id>detube@isgroup.com.ua</em:id>
-    <em:name>De Tube</em:name>
-    <em:version>1.1</em:version>
-    <em:type>2</em:type>
-    <em:bootstrap>true</em:bootstrap>t
+  <Description about="urn:mozilla:install-manifest"
+    em:id="garg_sms@yahoo.in"
+    em:type="2"
+    em:name="YouTube Flash to HTML5"
+    em:description="Converts YouTube from Flash to HTML5"
+    em:iconURL="http://www.youtube.com/yt/brand/media/image/yt-brand-standard-logo-95x40.png"
+    em:version="2.1"
+    em:bootstrap="true">
 
-    <!-- Front End Metadata -->
-    <em:creator>paranormal</em:creator>
+    <em:creator>Sukant Garg</em:creator>
     <em:developer>paranormal</em:developer>
-    <em:description>Youtube html5 video player fix</em:description>
-    <em:homepageURL>https://github.com/paranormal/detube</em:homepageURL>
-    <em:iconURL>http://www.youtube.com/yt/brand/media/image/yt-brand-standard-logo-95x40.png</em:iconURL>
 
-    <!-- Supported Browser Versions -->
-    <!-- Firefox -->
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
