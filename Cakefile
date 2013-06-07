@@ -15,7 +15,7 @@ exec = (commandLine) ->
 
 
 task 'clean', 'Clean up build directories', ->
-  try(fs.unlinkSync('yfth5@addons.mozilla.org.xpi'))
+  try(fs.unlinkSync('youtube-flash2html5@addons.mozilla.org.xpi'))
   try(fs.unlinkSync('bootstrap.js'))
   console.log('cleaned...')
 
@@ -26,7 +26,7 @@ task 'compile', 'Compile the project files', ->
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
-  exec('zip yfth5@addons.mozilla.org.xpi install.rdf bootstrap.js
+  exec('zip youtube-flash2html5@addons.mozilla.org.xpi install.rdf bootstrap.js
   ')
   console.log('packed...')
 
