@@ -33,16 +33,22 @@ windows =
       window = event.originalTarget.defaultView.window
       if window.location.hostname.match(/youtube/) and
       window.document.getElementById('player') and
+      window.document.getElementById('player-unavailable') and
+      window.document.getElementById('unavailable-message') and
       !window.document.getElementById('watch7-player-unavailable')
         windows.onPlayerLoad(window)
 
   onPlayerLoad: (window) ->
-    interval = window.setInterval ->
-      Components.utils.reportError("msg")
-      player = new Player(window.document.getElementById('movie_player'))
-      if player.valid()? and player.error()?
-        player.load()
-        window.clearInterval(interval)
-    , 1000
+    observer = new window.MutationObserver (mutations) ->
+      for mutation in mutations when mutation.type is 'childList'
+        for node in mutation.addedNodes
+          if node.localName is 'a' and node.href.match(/get.adobe.com/)
+            player = new Player(window.document.getElementById('movie_player'))
+            player.load()
+            return observer.disconnect()
+
+    observer.observe window.document.getElementById('player'),
+      childList: true
+      subtree: true
 
 exports.windows = windows
