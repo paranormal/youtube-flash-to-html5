@@ -44,7 +44,7 @@ windows =
         for node in mutation.addedNodes
           if node.localName is 'a' and node.href.match(/get.adobe.com/)
             player = new Player(window.document.getElementById('movie_player'))
-            player.load()
+            player.load() if player.valid()? and player.error()?
             return observer.disconnect()
 
     observer.observe window.document.getElementById('player'),
