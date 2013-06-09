@@ -30,22 +30,24 @@ windows =
 
   onContentLoaded: (event) ->
     if event.originalTarget.nodeName is '#document'
-      window = event.originalTarget.defaultView.window
+      window = event.originalTarget.defaultView
+      document = window.document
       if window.location.hostname.match(/youtube/) and
-      window.document.getElementById('player') and
-      window.document.getElementById('player-unavailable') and
-      window.document.getElementById('unavailable-message') and
-      !window.document.getElementById('watch7-player-unavailable')
+      document.getElementById('player') and
+      document.getElementById('player-unavailable') and
+      document.getElementById('unavailable-message') and
+      !document.getElementById('watch7-player-unavailable')
         windows.onPlayerLoad(window)
 
   onPlayerLoad: (window) ->
     observer = new window.MutationObserver (mutations) ->
-      for mutation in mutations when mutation.type is 'childList'
-        for node in mutation.addedNodes
-          if node.localName is 'a' and node.href.match(/get.adobe.com/)
-            player = new Player(window.document.getElementById('movie_player'))
-            player.load() if player.valid()? and player.error()?
-            return observer.disconnect()
+      for mutation in mutations
+        if mutation.target.lastChild and
+        mutation.target.lastChild.href and
+        mutation.target.lastChild.href.match(/get.adobe.com/)
+          player = new Player(window.document.getElementById('movie_player'))
+          player.load() if player.valid()? and player.error()?
+          observer.disconnect()
 
     observer.observe window.document.getElementById('player'),
       childList: true
