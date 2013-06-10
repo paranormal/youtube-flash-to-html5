@@ -34,8 +34,6 @@ windows =
       document = window.document
       if window.location.hostname.match(/youtube/) and
       document.getElementById('player') and
-      document.getElementById('player-unavailable') and
-      document.getElementById('unavailable-message') and
       !document.getElementById('watch7-player-unavailable')
         windows.onPlayerLoad(window)
 
