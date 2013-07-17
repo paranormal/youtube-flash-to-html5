@@ -5,19 +5,21 @@ class Player
     hasFallbackHappened: 'r'
     getVideoData: 'r'
 
+  @status =
+     unstarted: -1
+     ended: 0
+     playing: 1
+     paused: 2
+     buffering: 3
+     cued: 5
+
   constructor: (movie_player) ->
     if movie_player?
       @movie_player = movie_player.wrappedJSObject
       @movie_player.__exposedProps__ = Player.exposedProps
 
   error: ->
-    switch @movie_player.getPlayerState()
-      when -1, @movie_player.hasFallbackHappened(), 0, 1, 2
-        # Components.utils.reportError('unstarted|fall back|0|1|2')
-        true
-      else #3 and alternative states
-        # Components.utils.reportError('buffering -> 3')
-        null
+    true if @movie_player.getPlayerState() is Player.status.unstarted
 
   valid: ->
     if @movie_player? and @movie_player.getPlayerState?
@@ -29,7 +31,6 @@ class Player
 
 
   load: ->
-    if @movie_player.hasFallbackHappened()
-      @movie_player.loadVideoById(@movie_player.getVideoData().video_id)
+    @movie_player.loadVideoById(@movie_player.getVideoData().video_id)
 
 exports.Player = Player
