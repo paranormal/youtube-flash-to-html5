@@ -40,9 +40,10 @@ windows =
   onPlayerLoad: (window) ->
     observer = new window.MutationObserver (mutations) ->
       for mutation in mutations
-        if mutation.target.lastChild and
-        mutation.target.lastChild.href and
-        mutation.target.lastChild.href.match(/get.adobe.com/)
+        if mutation.target.hasChildNodes() and
+        mutation.target.lastChild.hasChildNodes() and
+        mutation.target.lastChild.lastChild.href and
+        mutation.target.lastChild.lastChild.href.match(/get.adobe.com/)
           player = new Player(window.document.getElementById('movie_player'))
           player.load() if player.valid()? and player.error()?
           observer.disconnect()
