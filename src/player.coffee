@@ -29,7 +29,6 @@ class Player
       # Components.utils.reportError('movie_player is not valid yet!')
       null
 
-
   load: ->
     @movie_player.loadVideoById(@movie_player.getVideoData().video_id)
 
