@@ -44,11 +44,11 @@ windows =
         mutation.target.lastChild.hasChildNodes() and
         mutation.target.lastChild.lastChild.href and
         mutation.target.lastChild.lastChild.href.match(/get.adobe.com/)
+          player = new Player(window.document.getElementById('movie_player'))
           window.setInterval ->
-            player = new Player(window.document.getElementById('movie_player'))
             player.load() if player.valid()? and player.error()?
-            observer.disconnect()
-          , 1000
+          , 100
+          observer.disconnect()
 
     observer.observe window.document.getElementById('player'),
       childList: true
