@@ -7,7 +7,7 @@
     em:name="YouTube Flash to HTML5"
     em:description="Converts YouTube from Flash to HTML5"
     em:iconURL="http://www.youtube.com/yt/brand/media/image/yt-brand-standard-logo-95x40.png"
-    em:version="2.3"
+    em:version="2.4"
     em:bootstrap="true">
 
     <em:creator>Sukant Garg</em:creator>
