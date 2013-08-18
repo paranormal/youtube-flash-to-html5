@@ -33,8 +33,7 @@ windows =
       window = event.originalTarget.defaultView
       document = window.document
       if window.location.hostname.match(/youtube/) and
-      document.getElementById('player') and
-      !document.getElementById('watch7-player-unavailable')
+      document.getElementById('player-api-legacy')
         windows.onPlayerLoad(window)
 
   onPlayerLoad: (window) ->
@@ -50,7 +49,7 @@ windows =
           , 100
           observer.disconnect()
 
-    observer.observe window.document.getElementById('player'),
+    observer.observe window.document.getElementById('player-api-legacy'),
       childList: true
       subtree: true
 
