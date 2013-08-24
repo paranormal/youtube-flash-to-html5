@@ -1,7 +1,5 @@
 fs = require('fs')
 _exec = require('child_process').exec
-coffee = '/home/.npm/packages/bin/coffee'
-jasmine = '/home/.npm/packages/bin/jasmine-node'
 
 exec = (commandLine) ->
   _exec(commandLine, (error, stdout, stderr) ->
@@ -15,21 +13,21 @@ exec = (commandLine) ->
 
 
 task 'clean', 'Clean up build directories', ->
-  try(fs.unlinkSync('youtube-flash2html5@addons.mozilla.org.xpi'))
+  try(fs.unlinkSync('flash2html5.xpi'))
   try(fs.unlinkSync('bootstrap.js'))
+  try(fs.unlinkSync('data/player.js'))
   console.log('cleaned...')
 
 task 'compile', 'Compile the project files', ->
-  # invoke 'spec'
   invoke 'clean'
-  exec("#{coffee} -cbj bootstrap.js src")
+  exec("coffee -cb data/player.coffee")
+  exec("coffee -cb bootstrap.coffee")
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
-  exec('zip youtube-flash2html5@addons.mozilla.org.xpi install.rdf bootstrap.js
-  ')
+  exec('zip flash2html5.xpi install.rdf icon.png bootstrap.js data/player.js')
   console.log('packed...')
 
 task 'spec', 'Running test suites', ->
   invoke 'clean'
-  exec("#{jasmine} --noStack --coffee spec/coffee")
+  exec("jasmine-node --noStack --coffee spec/coffee")

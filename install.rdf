@@ -2,11 +2,11 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest"
-    em:id="youtube-flash2html5@addons.mozilla.org"
+    em:id="flash2html5@addons.mozilla.org"
     em:type="2"
     em:name="YouTube Flash to HTML5"
     em:description="Converts YouTube from Flash to HTML5"
-    em:iconURL="http://www.youtube.com/yt/brand/media/image/yt-brand-standard-logo-95x40.png"
+    em:iconURL="resource://flash2html5/icon.png"
     em:version="2.5"
     em:bootstrap="true">
 
