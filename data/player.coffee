@@ -32,20 +32,21 @@ class Player
   load: ->
     @movie_player.loadVideoById(@movie_player.getVideoData().video_id)
 
-
 unless observer
   observer = new MutationObserver (mutations) ->
     check = (node) ->
-      (node instanceof HTMLDivElement) && node.classList.contains('ytp-error')
+      node instanceof HTMLDivElement && node.classList.contains('ytp-error')
+
+    register = ->
+      player = new Player(window.document.getElementById('movie_player'))
+      setInterval ->
+        player.load() if player.valid()? and player.error()?
+      , 100
+      observer.disconnect()
 
     for mutation in mutations
-      for node in mutation.addedNodes
-        if (check(node))
-          player = new Player(window.document.getElementById('movie_player'))
-          setInterval ->
-            player.load() if player.valid()? and player.error()?
-          , 100
-          observer.disconnect()
+      for node in mutation.addedNodes when check(node)
+        register()
 
   insertInto = document.getElementById('player-api')
   if (insertInto)

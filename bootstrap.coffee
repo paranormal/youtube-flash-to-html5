@@ -30,7 +30,7 @@ loader = Loader.Loader
   rootURI: ''
 
 # fake requirer uri lib:// (it's used for relative requires and error messages)
-module = Loader.Module('main', 'lib://')
+module = Loader.Module('main', 'data://')
 require = Loader.Require(loader, module)
 
 install = ->
@@ -46,10 +46,10 @@ startup = (data, reason) ->
 
   require('sdk/page-mod').PageMod
     include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
-    # contentScriptWhen: 'ready'
-    contentScriptFile: 'resource://flash2html5/player.js'
+    contentScriptFile: 'resource://flash2html5/data/player.js'
 
 shutdown = ->
+  # resource deregistration
   resource = Services.io.getProtocolHandler('resource').
     QueryInterface(Ci.nsIResProtocolHandler)
   resource.setSubstitution('flash2html5', null)
