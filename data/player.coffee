@@ -34,9 +34,11 @@ class Player
 
 unless observer
   observer = new MutationObserver (mutations) ->
+    # check if node include ytp-error class
     check = (node) ->
       node instanceof HTMLDivElement && node.classList.contains('ytp-error')
 
+    # real work and observer kill
     register = ->
       player = new Player(window.document.getElementById('movie_player'))
       setInterval ->
@@ -44,10 +46,11 @@ unless observer
       , 100
       observer.disconnect()
 
+    # iteration over all mutations
     for mutation in mutations
       for node in mutation.addedNodes when check(node)
         register()
 
-  insertInto = document.getElementById('player-api')
-  if (insertInto)
-    observer.observe(insertInto, { childList: true, subtree: true })
+  # observable id
+  api = document.getElementById('player-api')
+  observer.observe(api, { childList: true, subtree: true }) if (api)

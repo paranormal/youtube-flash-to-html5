@@ -6,37 +6,37 @@ Cu.import('resource://gre/modules/Services.jsm')
 { descriptor, Require, Loader, Module } =
   Cu.import('resource://gre/modules/commonjs/toolkit/loader.js')
 
-loader = Loader.Loader
-
-  # loader documented options
-  paths:
-    'toolkit/': 'resource://gre/modules/toolkit/'
-    'sdk/':     'resource://gre/modules/commonjs/sdk/'
-    '':         'resource://gre/modules/commonjs/'
-  modules:
-    'toolkit/loader': Loader
-  globals:
-    console:
-      log:       -> dump.bind(dump, 'log:')
-      info:      -> dump.bind(dump, 'info: ')
-      warn:      -> dump.bind(dump, 'warn: ')
-      error:     -> dump.bind(dump, 'error: ')
-      exception: -> dump.bind(dump, 'exception: ')
-
-  # undocumented hack (without this - wouldn't work)
-  metadata:
-    'permissions':
-      'private-browsing': true
-  rootURI: ''
-
-# fake requirer uri lib:// (it's used for relative requires and error messages)
-module = Loader.Module('main', 'data://')
-require = Loader.Require(loader, module)
-
 install = ->
 uninstall = ->
 
 startup = (data, reason) ->
+
+  loader = Loader.Loader
+    # loader documented options
+    paths:
+      'toolkit/': 'resource://gre/modules/toolkit/'
+      'sdk/':     'resource://gre/modules/commonjs/sdk/'
+      '':         'resource://gre/modules/commonjs/'
+    modules:
+      'toolkit/loader': Loader
+    globals:
+      console:
+        log:       -> dump.bind(dump, 'log:')
+        info:      -> dump.bind(dump, 'info: ')
+        warn:      -> dump.bind(dump, 'warn: ')
+        error:     -> dump.bind(dump, 'error: ')
+        exception: -> dump.bind(dump, 'exception: ')
+
+    # instead of harness-options.json I put it down here.
+    metadata:
+      'permissions':
+        'private-browsing': true
+    rootURI: ''
+
+  # fake requirer uri (it's used for relative requires and error messages)
+  module = Loader.Module('main', 'data://')
+  require = Loader.Require(loader, module)
+
   # resource registration
   resource = Services.io.getProtocolHandler('resource').
     QueryInterface(Ci.nsIResProtocolHandler)
@@ -44,12 +44,16 @@ startup = (data, reason) ->
   alias = Services.io.newURI('jar:' + alias.spec + '!/', null, null)
   resource.setSubstitution('flash2html5', alias)
 
+  # inject player script into page
   require('sdk/page-mod').PageMod
     include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
     contentScriptFile: 'resource://flash2html5/data/player.js'
 
-shutdown = ->
+shutdown = (data, reason) ->
   # resource deregistration
   resource = Services.io.getProtocolHandler('resource').
     QueryInterface(Ci.nsIResProtocolHandler)
   resource.setSubstitution('flash2html5', null)
+
+  # loader && modules destruction
+  Loader.unload(loader, 'disable')
