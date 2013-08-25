@@ -6,6 +6,9 @@ Cu.import('resource://gre/modules/Services.jsm')
 { descriptor, Require, Loader, Module } =
   Cu.import('resource://gre/modules/commonjs/toolkit/loader.js')
 
+REASON = [ 'unknown', 'startup', 'shutdown', 'enable', 'disable',
+           'install', 'uninstall', 'upgrade', 'downgrade' ]
+
 install = ->
 uninstall = ->
 
@@ -44,10 +47,14 @@ startup = (data, reason) ->
   alias = Services.io.newURI('jar:' + alias.spec + '!/', null, null)
   resource.setSubstitution('flash2html5', alias)
 
-  # inject player script into page
-  require('sdk/page-mod').PageMod
-    include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
-    contentScriptFile: 'resource://flash2html5/data/player.js'
+  # !!! I don't know the better way now
+  unless REASON[reason] is 'enable'
+    # wait untill it'll be ready
+    require('sdk/system/events').once 'sessionstore-windows-restored', ->
+      # inject player script into page
+      require('sdk/page-mod').PageMod
+        include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
+        contentScriptFile: 'resource://flash2html5/data/player.js'
 
 shutdown = (data, reason) ->
   # resource deregistration
