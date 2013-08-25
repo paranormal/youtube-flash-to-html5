@@ -13,7 +13,7 @@ exec = (commandLine) ->
 
 
 task 'clean', 'Clean up build directories', ->
-  try(fs.unlinkSync('flash2html5.xpi'))
+  try(fs.unlinkSync('garg_sms@yahoo.in.xpi'))
   try(fs.unlinkSync('bootstrap.js'))
   try(fs.unlinkSync('data/player.js'))
   console.log('cleaned...')
@@ -25,7 +25,7 @@ task 'compile', 'Compile the project files', ->
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
-  exec('zip flash2html5.xpi install.rdf icon.png bootstrap.js data/player.js')
+  exec('zip garg_sms@yahoo.in.xpi install.rdf icon.png bootstrap.js data/player.js')
   console.log('packed...')
 
 task 'spec', 'Running test suites', ->
