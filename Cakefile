@@ -25,7 +25,7 @@ task 'compile', 'Compile the project files', ->
   console.log('built..')
 
 task 'xpi', 'Clean, build, and package the project', ->
-  exec('zip garg_sms@yahoo.in.xpi install.rdf icon.png bootstrap.js data/player.js')
+  exec('zip garg_sms@yahoo.in.xpi install.rdf icon.png icon64.png bootstrap.js data/player.js')
   console.log('packed...')
 
 task 'spec', 'Running test suites', ->
