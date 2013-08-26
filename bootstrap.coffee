@@ -48,13 +48,18 @@ startup = (data, reason) ->
   resource.setSubstitution('flash2html5', alias)
 
   # !!! I don't know the better way now
-  unless REASON[reason] is 'enable'
+  if REASON[reason] is 'startup'
     # wait untill it'll be ready
     require('sdk/system/events').once 'sessionstore-windows-restored', ->
       # inject player script into page
       require('sdk/page-mod').PageMod
         include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
         contentScriptFile: 'resource://flash2html5/data/player.js'
+  else if REASON[reason] is 'install'
+    # inject player script into page
+    require('sdk/page-mod').PageMod
+      include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
+      contentScriptFile: 'resource://flash2html5/data/player.js'
 
 shutdown = (data, reason) ->
   # resource deregistration
