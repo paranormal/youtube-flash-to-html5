@@ -47,7 +47,7 @@ startup = (data, reason) ->
   alias = Services.io.newURI('jar:' + alias.spec + '!/', null, null)
   resource.setSubstitution('flash2html5', alias)
 
-  # !!! I don't know the better way now
+  # !!! I don't know the better way now (TODO HERE) !!!
   if REASON[reason] is 'startup'
     # wait untill it'll be ready
     require('sdk/system/events').once 'sessionstore-windows-restored', ->
@@ -55,7 +55,7 @@ startup = (data, reason) ->
       require('sdk/page-mod').PageMod
         include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
         contentScriptFile: 'resource://flash2html5/data/player.js'
-  else if REASON[reason] is 'install'
+  else if REASON[reason] isnt 'enable'
     # inject player script into page
     require('sdk/page-mod').PageMod
       include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
