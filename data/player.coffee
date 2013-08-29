@@ -23,10 +23,8 @@ class Player
 
   valid: ->
     if @movie_player? and @movie_player.getPlayerState?
-      # Components.utils.reportError('movie_player is valid!')
       true
     else
-      # Components.utils.reportError('movie_player is not valid yet!')
       null
 
   load: ->
@@ -34,11 +32,11 @@ class Player
 
 unless observer
   observer = new MutationObserver (mutations) ->
-    # check if node include ytp-error class
+    # check if node includes ytp-error class
     check = (node) ->
       node instanceof HTMLDivElement && node.classList.contains('ytp-error')
 
-    # real work and observer kill
+    # player comes here and observer dies
     register = ->
       player = new Player(window.document.getElementById('movie_player'))
       setInterval ->
