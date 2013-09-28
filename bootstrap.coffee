@@ -9,11 +9,15 @@ Cu.import('resource://gre/modules/Services.jsm')
 REASON = [ 'unknown', 'startup', 'shutdown', 'enable', 'disable',
            'install', 'uninstall', 'upgrade', 'downgrade' ]
 
+unload = null
+loader = null
+
 install = ->
 uninstall = ->
 
 startup = (data, reason) ->
 
+  unload = Loader.unload
   loader = Loader.Loader
     # loader documented options
     paths:

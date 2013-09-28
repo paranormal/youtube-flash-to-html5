@@ -19,7 +19,7 @@ class Player
       @movie_player.__exposedProps__ = Player.exposedProps
 
   error: ->
-    true if @movie_player.getPlayerState() is Player.status.unstarted
+    true if @movie_player.getPlayerState() is Player.status.buffering
 
   valid: ->
     if @movie_player? and @movie_player.getPlayerState?
@@ -39,7 +39,7 @@ unless observer
     # player comes here and observer dies
     register = ->
       player = new Player(window.document.getElementById('movie_player'))
-      setInterval ->
+      setTimeout ->
         player.load() if player.valid()? and player.error()?
       , 100
       observer.disconnect()
