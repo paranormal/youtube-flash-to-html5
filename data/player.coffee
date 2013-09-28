@@ -39,8 +39,9 @@ unless observer
     # player comes here and observer dies
     register = ->
       player = new Player(window.document.getElementById('movie_player'))
-      setTimeout ->
+      interval = setInterval ->
         player.load() if player.valid()? and player.error()?
+        clearInterval(interval)
       , 100
       observer.disconnect()
 
