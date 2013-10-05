@@ -35,6 +35,7 @@ startup = (data, reason) ->
         exception: -> dump.bind(dump, 'exception: ')
 
     # instead of harness-options.json I put it down here.
+    id: 'garg_sms@yahoo.in'
     metadata:
       'permissions':
         'private-browsing': true
@@ -59,7 +60,7 @@ startup = (data, reason) ->
       require('sdk/page-mod').PageMod
         include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
         contentScriptFile: 'resource://flash2html5/data/player.js'
-  else if REASON[reason] isnt 'enable'
+  else
     # inject player script into page
     require('sdk/page-mod').PageMod
       include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
