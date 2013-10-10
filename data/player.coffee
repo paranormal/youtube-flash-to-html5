@@ -38,7 +38,7 @@ unless observer
 
     # player comes here and observer dies
     register = ->
-      player = new Player(window.document.getElementById('movie_player'))
+      player = new Player(getElementById('movie_player'))
       interval = setInterval ->
         player.load() if player.valid()? and player.error()?
         clearInterval(interval)
