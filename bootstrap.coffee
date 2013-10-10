@@ -52,19 +52,22 @@ startup = (data, reason) ->
   alias = Services.io.newURI('jar:' + alias.spec + '!/', null, null)
   resource.setSubstitution('flash2html5', alias)
 
-  # !!! I don't know the better way now (TODO HERE) !!!
-  if REASON[reason] is 'startup'
-    # wait untill it'll be ready
-    require('sdk/system/events').once 'sessionstore-windows-restored', ->
-      # inject player script into page
-      require('sdk/page-mod').PageMod
-        include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
-        contentScriptFile: 'resource://flash2html5/data/player.js'
-  else
-    # inject player script into page
+  # injection doze
+  insulin = ->
     require('sdk/page-mod').PageMod
       include: /^(?:http|https):\/\/www\.youtube\.com\/watch\?v=.*/
       contentScriptFile: 'resource://flash2html5/data/player.js'
+
+  # !!! I don't know the better way now (TODO HERE) !!!
+  # Ok, I know. There are a lot of hard coded things in jetpack.
+  # It's better left this, unless I want to stub everything
+  if REASON[reason] is 'startup'
+    # wait untill it'll be ready, then inject
+    require('sdk/system/events').once 'sessionstore-windows-restored', ->
+      insulin()
+  else
+    # just inject
+    insulin()
 
 shutdown = (data, reason) ->
   # resource deregistration
