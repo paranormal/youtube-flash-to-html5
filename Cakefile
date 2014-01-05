@@ -11,7 +11,6 @@ exec = (commandLine) ->
       process.stdout.write(error)
   )
 
-
 task 'clean', 'Clean up build directories', ->
   try(fs.unlinkSync('garg_sms@yahoo.in.xpi'))
   try(fs.unlinkSync('bootstrap.js'))
@@ -20,7 +19,7 @@ task 'clean', 'Clean up build directories', ->
 
 task 'compile', 'Compile the project files', ->
   invoke 'clean'
-  exec("coffee -cb data/player.coffee")
+  exec("coffee -c data/player.coffee")
   exec("coffee -cb bootstrap.coffee")
   console.log('built..')
 
