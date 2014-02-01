@@ -6,7 +6,7 @@
     em:type="2"
     em:name="YouTube Flash to HTML5"
     em:description="Converts YouTube from Flash to HTML5"
-    em:version="3.0"
+    em:version="3.1"
     em:bootstrap="true">
 
     <em:creator>Sukant Garg</em:creator>
